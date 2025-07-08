@@ -101,7 +101,7 @@ commands:
       usage: /<command> <numberOfBlocks>
       aliases: [expandclaim, resizeclaim]
       permission: griefprevention.claims
-    claim:
+    claimm:
       description: Creates a land claim centered at your current location.
       usage: /<command> [optional radius]
       aliases: [createclaim, makeclaim, newclaim]

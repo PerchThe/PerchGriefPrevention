@@ -440,6 +440,8 @@ public abstract class DataStore
                 newClaim.parent.children.add(newClaim);
             }
             newClaim.inDataStore = true;
+            // PATCH: Register sub-claim in global claimIDMap for runtime lookups (fixes GPFlags issue)
+            this.claimIDMap.put(newClaim.id, newClaim);
             if (writeToStorage)
             {
                 this.saveClaim(newClaim);

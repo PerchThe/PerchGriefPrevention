@@ -811,6 +811,7 @@ public class BlockEventHandler implements Listener
     }
 
     private Claim lastBlockFertilizeClaim = null;
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void onBlockFertilize(@NotNull BlockFertilizeEvent event)
     {
@@ -842,34 +843,37 @@ public class BlockEventHandler implements Listener
             @NotNull Consumer<Claim> cancelSourceConsumer)
     {
         Claim sourceClaim = null;
-        BoundingBox box = BoundingBox.ofStates(states);
-        BiPredicate<@NotNull Claim, @NotNull BoundingBox> conflictCheck;
         if (player != null)
         {
-            // If a player is present, check their permission in affected claims.
-            conflictCheck = (claim, boundingBox) ->
+            // For each affected block, check only the most specific claim at that block.
+            for (BlockState state : states)
             {
-                Supplier<String> supplier = claim.checkPermission(player, ClaimPermission.Build, event);
-                if (supplier != null)
+                Claim claim = this.dataStore.getClaimAt(state.getLocation(), false, lastBlockFertilizeClaim);
+                if (claim != null)
                 {
-                    // Warn when denied access to a claim.
-                    GriefPrevention.sendMessage(player, TextMode.Err, supplier.get());
-                    return true;
+                    Supplier<String> supplier = claim.checkPermission(player, ClaimPermission.Build, event);
+                    if (supplier != null)
+                    {
+                        // Warn when denied access to a claim.
+                        GriefPrevention.sendMessage(player, TextMode.Err, supplier.get());
+                        event.setCancelled(true);
+                        cancelSourceConsumer.accept(claim);
+                        return;
+                    }
                 }
-                return false;
-            };
+            }
         }
         else
         {
             // If no player is present (dispenser, natural growth, etc.), use owner comparison.
             sourceClaim = this.dataStore.getClaimAt(source.getLocation(), false, false, lastBlockFertilizeClaim);
-            conflictCheck = denyOtherOwnerIntersection(sourceClaim);
-        }
-
-        if (boxConflictsWithClaims(source.getWorld(), box, sourceClaim, conflictCheck))
-        {
-            event.setCancelled(true);
-            cancelSourceConsumer.accept(sourceClaim);
+            BiPredicate<@NotNull Claim, @NotNull BoundingBox> conflictCheck = denyOtherOwnerIntersection(sourceClaim);
+            BoundingBox box = BoundingBox.ofStates(states);
+            if (boxConflictsWithClaims(source.getWorld(), box, sourceClaim, conflictCheck))
+            {
+                event.setCancelled(true);
+                cancelSourceConsumer.accept(sourceClaim);
+            }
         }
     }
 
