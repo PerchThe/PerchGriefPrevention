@@ -1080,6 +1080,15 @@ class PlayerEventHandler implements Listener
         if (!instance.config_claims_protectDonkeys && entity instanceof Donkey) return;
         if (!instance.config_claims_protectDonkeys && entity instanceof Mule) return;
         if (!instance.config_claims_protectLlamas && entity instanceof Llama) return;
+        if (!instance.config_claims_protectHappyGhasts && entity.getType() == EntityType.HAPPY_GHAST) return;
+        if (!instance.config_claims_protectStriders && entity.getType() == EntityType.STRIDER) return;
+        if (!instance.config_claims_protectPigs && entity.getType() == EntityType.PIG) return;
+        if (!instance.config_claims_protectMooshrooms && entity.getType() == EntityType.MOOSHROOM) return;
+        if (!instance.config_claims_protectGoats && entity.getType() == EntityType.GOAT) return;
+        if (!instance.config_claims_protectChickens && entity.getType() == EntityType.CHICKEN) return;
+        if (!instance.config_claims_protectSheep && entity.getType() == EntityType.SHEEP) return;
+        if (!instance.config_claims_protectCows && entity.getType() == EntityType.COW) return;
+
 
         PlayerData playerData = this.dataStore.getPlayerData(player.getUniqueId());
 

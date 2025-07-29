@@ -117,6 +117,14 @@ public class GriefPrevention extends JavaPlugin
     public boolean config_claims_protectHorses;                        //whether horses on a claim should be protected by that claim's rules
     public boolean config_claims_protectDonkeys;                    //whether donkeys on a claim should be protected by that claim's rules
     public boolean config_claims_protectLlamas;                        //whether llamas on a claim should be protected by that claim's rules
+    public boolean config_claims_protectHappyGhasts;
+    public boolean config_claims_protectStriders;
+    public boolean config_claims_protectPigs;
+    public boolean config_claims_protectMooshrooms;
+    public boolean config_claims_protectGoats;
+    public boolean config_claims_protectChickens;
+    public boolean config_claims_protectSheep;
+    public boolean config_claims_protectCows;
     public boolean config_claims_preventButtonsSwitches;            //whether buttons and switches are protectable
     public boolean config_claims_lockWoodenDoors;                    //whether wooden doors should be locked by default (require /accesstrust)
     public boolean config_claims_lockTrapDoors;                        //whether trap doors should be locked by default (require /accesstrust)
@@ -502,7 +510,7 @@ public class GriefPrevention extends JavaPlugin
             }
 
             //if the setting WOULD be disabled but this is a server upgrading from the old config format,
-            //then default to survival mode for safety's sake (to protect any admin claims which may 
+            //then default to survival mode for safety's sake (to protect any admin claims which may
             //have been created there)
             if (this.config_claims_worldModes.get(world) == ClaimsMode.Disabled &&
                     deprecated_claimsEnabledWorldNames.size() > 0)
@@ -534,6 +542,14 @@ public class GriefPrevention extends JavaPlugin
         this.config_claims_protectHorses = config.getBoolean("GriefPrevention.Claims.ProtectHorses", true);
         this.config_claims_protectDonkeys = config.getBoolean("GriefPrevention.Claims.ProtectDonkeys", true);
         this.config_claims_protectLlamas = config.getBoolean("GriefPrevention.Claims.ProtectLlamas", true);
+        this.config_claims_protectHappyGhasts = config.getBoolean("GriefPrevention.Claims.ProtectHappyGhasts", false);
+        this.config_claims_protectStriders = config.getBoolean("GriefPrevention.Claims.ProtectStriders", false);
+        this.config_claims_protectPigs = config.getBoolean("GriefPrevention.Claims.ProtectPigs", false);
+        this.config_claims_protectMooshrooms = config.getBoolean("GriefPrevention.Claims.ProtectMooshrooms", false);
+        this.config_claims_protectGoats = config.getBoolean("GriefPrevention.Claims.ProtectGoats", false);
+        this.config_claims_protectChickens = config.getBoolean("GriefPrevention.Claims.ProtectChickens", false);
+        this.config_claims_protectSheep = config.getBoolean("GriefPrevention.Claims.ProtectSheep", false);
+        this.config_claims_protectCows = config.getBoolean("GriefPrevention.Claims.ProtectCows", false);
         this.config_claims_preventButtonsSwitches = config.getBoolean("GriefPrevention.Claims.PreventButtonsSwitches", true);
         this.config_claims_lockWoodenDoors = config.getBoolean("GriefPrevention.Claims.LockWoodenDoors", false);
         this.config_claims_lockTrapDoors = config.getBoolean("GriefPrevention.Claims.LockTrapDoors", false);
@@ -706,6 +722,14 @@ public class GriefPrevention extends JavaPlugin
         outConfig.set("GriefPrevention.Claims.ProtectHorses", this.config_claims_protectHorses);
         outConfig.set("GriefPrevention.Claims.ProtectDonkeys", this.config_claims_protectDonkeys);
         outConfig.set("GriefPrevention.Claims.ProtectLlamas", this.config_claims_protectLlamas);
+        outConfig.set("GriefPrevention.Claims.ProtectHappyGhasts", this.config_claims_protectHappyGhasts);
+        outConfig.set("GriefPrevention.Claims.ProtectStriders", this.config_claims_protectStriders);
+        outConfig.set("GriefPrevention.Claims.ProtectPigs", this.config_claims_protectPigs);
+        outConfig.set("GriefPrevention.Claims.ProtectMooshrooms", this.config_claims_protectMooshrooms);
+        outConfig.set("GriefPrevention.Claims.ProtectGoats", this.config_claims_protectGoats);
+        outConfig.set("GriefPrevention.Claims.ProtectChickens", this.config_claims_protectChickens);
+        outConfig.set("GriefPrevention.Claims.ProtectSheep", this.config_claims_protectSheep);
+        outConfig.set("GriefPrevention.Claims.ProtectCows", this.config_claims_protectCows);
         outConfig.set("GriefPrevention.Claims.InitialBlocks", this.config_claims_initialBlocks);
         outConfig.set("GriefPrevention.Claims.Claim Blocks Accrued Per Hour.Default", this.config_claims_blocksAccruedPerHour_default);
         outConfig.set("GriefPrevention.Claims.Max Accrued Claim Blocks.Default", this.config_claims_maxAccruedBlocks_default);
